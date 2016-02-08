@@ -12,7 +12,7 @@ if x_point == x and y_point == y then
 elsif x_point == x then
 	puts "х координата верна, y нет"
 elsif y_point == y then
-	puts "y координата верна, y нет"
+	puts "y координата верна, x нет"
 else
 	puts "Близко, но нет"
 end
