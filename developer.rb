@@ -1,6 +1,6 @@
 #FIXME: break long lines into smaller one
 class Developer
-  @@MAX_TASKS = 10
+  MAX_TASKS = 10
 
   def initialize(name)
     @name = name
@@ -8,7 +8,7 @@ class Developer
   end
 
   def add_task(task)
-    raise "Слишком много работы!" unless @task_list.size < @@MAX_TASKS
+    raise "Слишком много работы!" unless @task_list.size < self.class::MAX_TASKS
     @task_list << task
     puts "%s: Добавлена задача \"%s\". Всего в списке задач: %i" %
       [@name, task, @task_list.size]
@@ -29,14 +29,14 @@ class Developer
     case @task_list.size
     when 0 then "свободен"
     when 1..9 then "работаю"
-    when @@MAX_TASKS then "занят"
+    when self.class::MAX_TASKS then "занят"
     # FIXME: is it actually needed here?
     else raise "The sing that should not be!"
     end
   end
 
   def can_add_task?
-    @task_list.size < @@MAX_TASKS
+    @task_list.size < self.class::MAX_TASKS
   end
 
   def can_work?
@@ -45,10 +45,10 @@ class Developer
 end
 
 class JuniorDeveloper < Developer
-  @@MAX_TASKS = 5
+  MAX_TASKS = 5
   def add_task(task)
     raise "Слишком сложно!" if task.length > 20
-    super task
+    super
   end
 
   def work!
@@ -61,7 +61,7 @@ class JuniorDeveloper < Developer
 end
 
 class SeniorDeveloper < Developer
-  @@MAX_TASKS = 15
+  MAX_TASKS = 15
 
   def work!
     #FIXME: кто определяет случайную вероятность?
