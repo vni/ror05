@@ -7,13 +7,14 @@ class Developer
 	end
 
 	def add_task(task)
+		puts "Developer.add_task called"
 		raise "Слишком много работы! (@task_list.size: #{@task_list.size}, @@MAX_TASKS: #{@@MAX_TASKS}" unless @task_list.size < @@MAX_TASKS
 		@task_list << task
 		puts "#{@name}: Добавлена задача \"#{task}\". Всего в списке задач: #{@task_list.size}"
 	end
 
 	def tasks
-		@task_list.each_with_index.map{ |elm, i| i.to_s + ". " + elm + "\n" }
+		@task_list.each_with_index.map{ |elm, i| (i+1).to_s + ". " + elm + "\n" }
 	end
 
 	def work!
@@ -117,6 +118,103 @@ def dev.test
 end
 
 dev.test
+
+class JuniorDeveloper < Developer
+	@@MAX_TASKS = 5
+	def add_task(task)
+		puts "JuniorDeveloper.add_task called"
+		raise "Слишком сложно!" if task.length > 20
+		super task
+	end
+
+	def work!
+		raise "Нечего делать!" if @task_list.empty? #FIXME: Should we raise an exception here?
+		#FIXME: should the number of tasks be less? Or JuniorDeveloper always do only one task?
+		#puts "#{@name}: пытаюсь делать задачу \"#{@task_list.shift}\". Осталось задач: #{@task_list.size}"
+		puts "#{@name}: пытаюсь делать задачу \"#{@task_list[0]}\". Осталось задач: #{@task_list.size}"
+	end
+end
+
+# Extend JuniourDeveloper class for test purposes
+class JuniorDeveloper
+	#FIXME: make ppp only one in Developer class.
+	def ppp msg #my pretty print
+		puts "\n*** " + msg
+	end
+
+	def test
+		ppp "JuniorDeveloper created:"
+		p self
+		begin
+			ppp "Try to add more then 5 tasks..."
+			6.times.each {|i| add_task "junior task #{i}"}
+		rescue Exception => msg
+			ppp "Catch an exception. As expected. '#{msg}'."
+		end
+
+		begin
+			ppp "Test to add task w/ more than 20 symbols:"
+			@task_list = [] # erase task_list
+			add_task "Very long task with more then 20 chars of data"
+		rescue Exception => msg
+			ppp "Catch an exception. As expected. '#{msg}'."
+		end
+
+		ppp "JuniorDeveloper.work!:"
+		add_task "Почистить обувь"
+		work!
+	end
+end
+
+jun = JuniorDeveloper.new("Федя")
+jun.test
+
+class SeniorDeveloper < Developer
+	@@MAX_TASKS = 15
+
+	def work!
+		#FIXME: кто определяет случайную вероятность?
+		if rand(3).zero?
+			puts "Что-то лень"
+		end
+
+		#raise "Нечего делать!" if @task_list.empty?
+		if !@task_list.empty?
+			puts "#{@name}: выполнена задача \"#{@task_list.delete_at(rand(@task_list.size))}\". Осталось задач: #{@task_list.size}"
+		end
+
+		if !@task_list.empty?
+			puts "#{@name}: выполнена задача \"#{@task_list.delete_at(rand(@task_list.size))}\". Осталось задач: #{@task_list.size}"
+		end
+	end
+end
+
+# Extend SeniorDeveloper class just for test purposes
+class SeniorDeveloper
+	#FIXME: make ppp only one in Developer class.
+	def ppp msg #my pretty print
+		puts "\n*** " + msg
+	end
+
+	def test
+		ppp "SeniorDeveloper created:"
+		p self
+		begin
+			ppp "Try to add more then 15 tasks..."
+			16.times.each {|i| add_task "big senior task #{i}"}
+		rescue Exception => msg
+			ppp "Catch an exception. As expected. '#{msg}'."
+		end
+
+		ppp "SeniorDeveloper.work!:"
+		10.times.each {|_| work!; puts}
+		#work!
+	end
+end
+
+sen = SeniorDeveloper.new("John 5")
+sen.test
+
 
 # AN OLD CODE. UNNEEDED. JUST FOR REFERENCE.
 =begin
