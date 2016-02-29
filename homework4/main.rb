@@ -54,6 +54,8 @@ puts "\nteam.report:"
 team.report
 
 # 7
+puts "\nteam_add_task ..., complexity: :senior"
 team.add_task "seniors task", complexity: :senior
 
+puts "\nteam_add_task ..., to: \"Василий\""
 team.add_task "Налить чаю", to: "Василий"

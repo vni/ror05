@@ -32,11 +32,9 @@ class Developer
   def status
     #FIXME: try to use can_add_task? and can_work? here
     case @task_list.size
-    when 0 then "свободен"
-    when 1..9 then "работаю"
-    when self.class::MAX_TASKS then "занят"
-    # FIXME: is it actually needed here?
-    else raise "The sing that should not be!"
+    when !can_work? then "свободен"
+    when !can_add_task? then "занят"
+    else "работаю"
     end
   end
 
