@@ -1,5 +1,6 @@
 class JuniorDeveloper < Developer
   MAX_TASKS = 5
+
   def add_task(task)
     raise "Слишком сложно!" if task.length > 20
     super
@@ -11,5 +12,17 @@ class JuniorDeveloper < Developer
     #FIXME: (I mean finished task should be removed from task_list)
     puts "#{@name}: пытаюсь делать задачу \"#{@task_list.shift}\". Осталось задач: #{@task_list.size}"
     #puts "#{@name}: пытаюсь делать задачу \"#{@task_list[0]}\". Осталось задач: #{@task_list.size}"
+  end
+
+  def priority_type
+    :juniors
+  end
+
+  def on_task_type
+    :junior
+  end
+
+  def title
+    "junior"
   end
 end

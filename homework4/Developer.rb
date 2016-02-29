@@ -47,4 +47,25 @@ class Developer
   def can_work?
     !@task_list.empty?
   end
+
+  def priority_type
+    :developers
+  end
+
+  def on_task_type
+    :developer
+  end
+
+  def report
+    str = "#{@name} (#{title}): "
+    @task_list.each do |tsk|
+      str += tsk + ", "
+    end
+    str.chomp!(", ")
+    str
+  end
+
+  def title
+    "developer"
+  end
 end

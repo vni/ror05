@@ -33,52 +33,15 @@ class Team
     @priorities = args
   end
 
-  def print_priority
-    @priorities
-  end
-
   def on_task to_whom, &block
     @task_triggers[to_whom] = block
   end
 
-  # FIXME: remove it
-  def print_task_triggers
-    pp @task_triggers
-  end
-
   def add_task tsk
-    # FIXME: somewhat complicated logic here. Simplify it.
-    sorted = @developers.sort_by(&:task_count)
-    first = sorted[0]
-    slice = sorted.take_while{|elm| elm.task_count == first.task_count}
-
-    found = nil
-    @priorities.each do |prio|
-      case prio
-      when :juniors; found = slice.select{|elm| elm.class == JuniorDeveloper}
-      when :developers; found = slice.select{|elm| elm.class == Developer}
-      when :seniors; found = slice.select{|elm| elm.class == SeniorDeveloper}
-      end
-
-      break unless found.empty?
-    end
-
-    to_whom = found[0]
-
+    to_whom = sorted_developers()[0]
     to_whom.add_task tsk
-    case to_whom.class.to_s
-    when "JuniorDeveloper"
-      if @task_triggers[:junior]
-        @task_triggers[:junior].call(to_whom, tsk)
-      end
-    when "Developer"
-      if @task_triggers[:developer]
-        @task_triggers[:developer].call(to_whom, tsk)
-      end
-    when "SeniorDeveloper"
-      if @task_triggers[:senior]
-        @task_triggers[:senior].call(to_whom, tsk)
-      end
+    if @task_triggers[to_whom.on_task_type]
+      @task_triggers[to_whom.on_task_type].call(to_whom, tsk)
     end
   end
 
@@ -105,6 +68,16 @@ class Team
   end
 
   def report
-    # FIXME: FINISH IT
+    sorted_developers().each do |dev|
+      puts dev.report
+    end
+  end
+
+  private
+
+  def sorted_developers
+    @developers.sort_by do |dev|
+      [dev.task_count, @priorities.index(dev.priority_type)]
+    end
   end
 end

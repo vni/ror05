@@ -58,13 +58,6 @@ puts team.all
 puts "\nteam.report:"
 team.report
 
-puts "\nPRIORITY:"
-puts team.print_priority
-pp team.print_priority
-
-puts "\nTASK_TRIGGERS:"
-team.print_task_triggers
-
 # 7
 #team.add_task "Помыть окна", complexity: senior
 
