@@ -37,8 +37,23 @@ class Team
     @task_triggers[to_whom] = block
   end
 
-  def add_task tsk
-    to_whom = sorted_developers()[0]
+  def add_task tsk, **options
+    if options[:complexity]
+      to_whom = @developers.select do |dev|
+        dev.on_task_type == options[:complexity]
+      end.sort_by do |dev|
+        dev.task_count
+      end
+      to_whom = to_whom[0]
+    elsif options[:to]
+      to_whom = @developers.select do |dev|
+        dev.name == options[:to]
+      end
+      to_whom = to_whom[0]
+    else
+      to_whom = sorted_developers()[0]
+    end
+
     to_whom.add_task tsk
     if @task_triggers[to_whom.on_task_type]
       @task_triggers[to_whom.on_task_type].call(to_whom, tsk)

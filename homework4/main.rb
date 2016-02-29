@@ -1,11 +1,6 @@
 require_relative 'Team'
 
 # 1
-# Учитывая, что у нас есть классы из предыдущего задания
-# (Developer, JuniorDeveloper и SeniorDeveloper),
-# нужно написать класс Team (команда разработчиков),
-# который бы работал так:
-
 team = Team.new do
   have_seniors "Олег", "Оксана"
   have_developers "Олеся", "Василий", "Игорь-Богдан"
@@ -59,6 +54,6 @@ puts "\nteam.report:"
 team.report
 
 # 7
-#team.add_task "Помыть окна", complexity: senior
+team.add_task "seniors task", complexity: :senior
 
-#team.add_task "Налить чаю", to: "Василий"
+team.add_task "Налить чаю", to: "Василий"
