@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RailsHomeworks</title>
+  <title>Петиции нашего района</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+  <div align="right">
+    <h6>
+    <% if current_user %>
+      <%= current_user.first_name %>
+      <%= current_user.last_name %>
+      (<%= current_user.email %>) |
+      <%= link_to "Выйти", logout_path %>
+    <% else %>
+      <%= link_to "Зарегистрироваться", signup_path %> |
+      <%= link_to "Войти", login_path %>
+    <% end %>
+    </h6>
+  </div>
+
+  <div align="right">
+  <h6>
+    <%= link_to "Все петиции", petitions_path %> |
+    <%= link_to "Создать петицию", new_petition_path %>
+    <% if current_user %>
+      |
+      <%= link_to "Мои петиции", petitions_path(my: true) %>
+    <% end %>
+  </h6>
+  </div>
+
+  <%= yield %>
+
+  <footer>
+    <p>&copy; rails_homeworks software incorporated 2016</p>
+  </footer>
 
 </body>
 </html>
