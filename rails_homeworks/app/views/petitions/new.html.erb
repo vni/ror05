@@ -1,26 +1,3 @@
 <h2>Новая петиция</h2>
 
-<%= form_for @petition do |f| %>
-  <% if @petition.errors.any? %>
-    <div id="error_explanation">
-      <h2>Form is invalid</h2>
-      <ul>
-        <% @petition.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <p>
-    <%= f.label :title, 'Название' %><br>
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :body, 'Описание' %><br>
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= submit_tag 'Cоздать' %>
-  </p>
-<% end %>
+<%= render 'form_common' %>

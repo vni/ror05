@@ -1,5 +1,27 @@
-<center><h2>Петиция: "<%= @petition.title %>"</h2></center>
+<h2>Петиция</h2>
+<h4><%= @petition.title %></h4>
+<tt><%= @petition.created_at.strftime '%d/%m/%Y %H:%M' %></tt>
 
 <p>
   <%= @petition.body %>
+</p>
+
+<p>
+Голосов: <%= @petition.votes.count %>
+</p>
+
+<p>
+  <% if current_user %>
+    <% if @petition.already_voted?(current_user) %>
+      Вы уже поддержали данную петицию
+    <% else %>
+      <%= render text: "petitions_path: #{petitions_path}" %>
+      <%= render text: "petitions_path: #{petitions_path(my: true)}" %>
+      <%= render text: "votes_path: #{votes_path}" %>
+      <%= link_to "Поддержать", votes_path({petition_id: @petition.id}) %>
+      <%= button_to "Поддержать", votes_path({petition_id: @petition.id}) %>
+    <% end %>
+  <% else %>
+    <i>Авторизуйтесь, для того, что-бы иметь возможность поддержать эту петицию</i>
+  <% end %>
 </p>

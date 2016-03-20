@@ -1,14 +1,21 @@
-<center><h2><%= params[:my] ? "Мои" : "" %> петиции</h2></center>
+<h2><%= params[:my] ? "Мои" : "Все" %> петиции</h2>
 
 <table>
   <thead>
     <tr>
       <th>Петиции</th>
       <th>Автор</th>
+      <th>Голоса</th>
+      <th>Дата создания</th>
     </tr>
   </thead>
 
   <% @petitions.each do |petition| %>
-    <%= render 'petition', petition: petition %>
+    <tr>
+      <td><%= link_to petition.title, petition_path(petition) %></td>
+      <td><%= petition.user.name %></td>
+      <td><center><%= petition.votes.count %></center></td>
+      <td><%= petition.created_at.strftime '%d/%m/%Y %H:%M' %>
+    </tr>
   <% end %>
 </table>
