@@ -15,11 +15,7 @@
     <% if @petition.already_voted?(current_user) %>
       Вы уже поддержали данную петицию
     <% else %>
-      <%= render text: "petitions_path: #{petitions_path}" %>
-      <%= render text: "petitions_path: #{petitions_path(my: true)}" %>
-      <%= render text: "votes_path: #{votes_path}" %>
-      <%= link_to "Поддержать", votes_path({petition_id: @petition.id}) %>
-      <%= button_to "Поддержать", votes_path({petition_id: @petition.id}) %>
+      <%= button_to "Поддержать", votes_path(petition_id: @petition.id) %>
     <% end %>
   <% else %>
     <i>Авторизуйтесь, для того, что-бы иметь возможность поддержать эту петицию</i>

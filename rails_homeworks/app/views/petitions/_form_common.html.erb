@@ -1,6 +1,6 @@
 <%= form_for @petition do |f| %>
   <% if @petition.errors.any? %>
-    <div id="error_explanation">
+    <div class="error_explanation">
       <h2>Form is invalid</h2>
       <ul>
         <% @petition.errors.full_messages.each do |message| %>
@@ -10,19 +10,19 @@
     </div>
   <% end %>
 
-  <p>
+  <div class="form-group">
     <%= f.label :title, 'Название' %><br>
     <%= f.text_field :title %>
-  </p>
-  <p>
+  </div>
+  <div class="form-group">
     <%= f.label :body, 'Описание' %><br>
     <%= f.text_area :body %>
-  </p>
-  <p>
+  </div>
+  <div class="actions">
     <% if @petition.new_record? %>
-      <%= submit_tag 'Cоздать' %>
+      <%= submit_tag 'Cоздать', class: "btn btn-primary" %>
     <% else %>
-      <%= submit_tag 'Изменить' %>
+      <%= submit_tag 'Изменить', class: "btn btn-warning" %>
     <% end %>
-  </p>
+  </div>
 <% end %>

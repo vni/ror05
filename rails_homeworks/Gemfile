@@ -48,7 +48,7 @@ end
 ################################################################################
 # twitter bootstrap gem
 # URL: https://github.com/seyhunak/twitter-bootstrap-rails
-#gem "therubyracer"
-#gem "less-rails"
+gem "therubyracer"
+gem "less-rails"
 gem "twitter-bootstrap-rails"
 ################################################################################

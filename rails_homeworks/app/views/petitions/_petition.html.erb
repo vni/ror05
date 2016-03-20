@@ -1,0 +1,6 @@
+    <tr>
+      <td><%= link_to petition.title, petition_path(petition) %></td>
+      <td><%= petition.user.name %></td>
+      <td><center><%= petition.votes.count %></center></td>
+      <td><%= petition.created_at.strftime '%d/%m/%Y %H:%M' %>
+    </tr>
