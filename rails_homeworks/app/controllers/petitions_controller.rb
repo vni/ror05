@@ -35,7 +35,7 @@ class PetitionsController < ApplicationController
   def destroy
     petition = current_user.petitions.find(params[:id])
     petition.destroy
-    redirect_to action: :index, notice: "Петиция удалена"
+    redirect_to petitions_path, notice: "Петиция удалена"
   end
 
   private
