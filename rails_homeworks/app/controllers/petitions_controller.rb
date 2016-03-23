@@ -3,11 +3,14 @@ class PetitionsController < ApplicationController
 
   def index
     @petitions = Petition.all
-    @petitions = @petitions.where(user: current_user) if params[:my]
+    if params[:my]
+      @petitions = @petitions.where(user: current_user)
+      render 'my_petitions'
+    end
   end
 
-  def show
-    @petition = Petition.find(params[:id])
+  def new
+    @petition = current_user.petitions.new
   end
 
   def create
@@ -15,8 +18,24 @@ class PetitionsController < ApplicationController
     redirect_to petition
   end
 
-  def new
-    @petition = current_user.petitions.new
+  def show
+    @petition = Petition.find(params[:id])
+  end
+
+  def edit
+    @petition = current_user.petitions.find(params[:id])
+  end
+
+  def update # POST /petitions/:id
+    petition = current_user.petitions.find(params[:id])
+    petition.update(permitted_params)
+    redirect_to petition, notice: "Петиция обновлена"
+  end
+
+  def destroy
+    petition = current_user.petitions.find(params[:id])
+    petition.destroy
+    redirect_to petitions_path, notice: "Петиция удалена"
   end
 
   private

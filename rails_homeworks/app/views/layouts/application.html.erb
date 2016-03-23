@@ -38,17 +38,7 @@
     <%#<a class="navbar-brand" href="/">Онлайн петиции нашего района</a>%>
   </div>
 
-  <% if flash[:alert] %>
-    <h5 style="color: red">
-      <%= flash[:alert] %>
-    </h5>
-  <% end %>
-  <% if flash[:notice] %>
-    <h5 style="color: #AAAA00">
-      <%=  flash[:notice] %>
-    </h5>
-  <% end %>
-
+  <%= bootstrap_flash %>
   <%= yield %>
 
   <footer>
